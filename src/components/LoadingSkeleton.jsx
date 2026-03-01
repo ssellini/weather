@@ -1,6 +1,6 @@
 export function SkeletonCard() {
   return (
-    <div className="rounded-2xl p-5 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 animate-pulse">
+    <div className="rounded-2xl p-5 glass-card animate-pulse">
       <div className="h-4 w-20 bg-gray-200 dark:bg-white/10 rounded mb-3" />
       <div className="h-8 w-28 bg-gray-200 dark:bg-white/10 rounded mb-2" />
       <div className="h-3 w-24 bg-gray-200 dark:bg-white/10 rounded" />
@@ -10,7 +10,7 @@ export function SkeletonCard() {
 
 export function SkeletonChart() {
   return (
-    <div className="rounded-2xl p-6 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 animate-pulse">
+    <div className="rounded-2xl p-6 glass-card animate-pulse">
       <div className="h-5 w-40 bg-gray-200 dark:bg-white/10 rounded mb-6" />
       <div className="h-64 bg-gray-200 dark:bg-white/10 rounded" />
     </div>

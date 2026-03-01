@@ -14,6 +14,7 @@ const HeatmapCalendar = lazy(() => import('./components/charts/HeatmapCalendar')
 const ClimateRadar = lazy(() => import('./components/charts/ClimateRadar'));
 const TrendLine = lazy(() => import('./components/charts/TrendLine'));
 const ComparisonView = lazy(() => import('./components/ComparisonView'));
+const PrecipitationDetail = lazy(() => import('./components/PrecipitationDetail'));
 
 const currentYear = new Date().getFullYear();
 
@@ -24,7 +25,7 @@ const T = {
     search: 'Rechercher',
     comparison: 'Comparaison',
     error: 'Erreur',
-    heatmapYear: 'Année du calendrier :',
+    heatmapYear: 'Année :',
   },
   en: {
     empty: 'Select a city to begin',
@@ -32,7 +33,7 @@ const T = {
     search: 'Search',
     comparison: 'Comparison',
     error: 'Error',
-    heatmapYear: 'Calendar year:',
+    heatmapYear: 'Year:',
   },
 };
 
@@ -100,20 +101,20 @@ export default function App() {
   const hasData = !weather.loading && weather.stats && weather.processedDays.length > 0;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0e1a] text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-gray-50 dark:bg-mesh-dark text-gray-900 dark:text-white transition-colors duration-300">
       <Header darkMode={darkMode} setDarkMode={setDarkMode} lang={lang} setLang={setLang} />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8">
         {/* Mode toggle */}
         <div className="flex gap-2 justify-center">
           {['search', 'comparison'].map((m) => (
             <button
               key={m}
               onClick={() => setMode(m)}
-              className={`px-5 py-2 rounded-xl text-sm font-medium transition-all ${
+              className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all active:scale-95 ${
                 mode === m
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25'
-                  : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10'
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/20'
+                  : 'bg-white/60 dark:bg-white/[0.03] text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-white/5 border border-gray-200/60 dark:border-white/8'
               }`}
             >
               {m === 'search' ? `🔍 ${t.search}` : `📊 ${t.comparison}`}
@@ -148,14 +149,14 @@ export default function App() {
 
             {/* City indicator */}
             {city && (
-              <div className="text-center">
+              <div className="text-center space-y-1">
                 <h2 className="text-xl font-display font-bold text-gray-800 dark:text-white">
                   {getCountryFlag(city.country_code)} {city.name}
                   {city.admin1 && (
                     <span className="text-gray-400 font-normal text-base ml-2">{city.admin1}, {city.country}</span>
                   )}
                 </h2>
-                <p className="text-sm text-gray-400 font-mono mt-1">
+                <p className="text-sm text-gray-400 font-mono">
                   {startYear} — {endYear}
                 </p>
               </div>
@@ -167,38 +168,51 @@ export default function App() {
             {/* Error */}
             {weather.error && (
               <div className="text-center py-8">
-                <p className="text-red-400 font-medium">{t.error}: {weather.error}</p>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/20">
+                  <span className="text-red-400 font-medium text-sm">{t.error}: {weather.error}</span>
+                </div>
               </div>
             )}
 
             {/* Empty state */}
             {!city && !weather.loading && (
-              <div className="text-center py-20">
-                <div className="text-6xl mb-4">🌍</div>
-                <h2 className="text-xl font-display font-semibold text-gray-600 dark:text-gray-300">{t.empty}</h2>
-                <p className="text-sm text-gray-400 mt-2">{t.emptySub}</p>
+              <div className="text-center py-24">
+                <div className="text-7xl mb-6 animate-float">🌍</div>
+                <h2 className="text-2xl font-display font-semibold text-gray-600 dark:text-gray-200">{t.empty}</h2>
+                <p className="text-sm text-gray-400 dark:text-gray-500 mt-3 max-w-md mx-auto">{t.emptySub}</p>
               </div>
             )}
 
             {/* Data display */}
             {hasData && (
-              <div className="space-y-8 animate-fade-in">
+              <div className="space-y-10 animate-fade-in">
                 {/* KPI Cards */}
                 <StatsCards stats={weather.stats} unit={unit} lang={lang} />
 
-                {/* Main chart tabs */}
+                {/* Temperature charts tabs */}
                 <ChartTabs monthlyAverages={weather.monthlyAverages} years={years} lang={lang} />
 
-                {/* Secondary charts */}
+                {/* Precipitation detail section with Day/Month/Year tabs */}
+                <Suspense fallback={<SkeletonChart />}>
+                  <PrecipitationDetail
+                    processedDays={weather.processedDays}
+                    monthlyAverages={weather.monthlyAverages}
+                    yearlyAverages={weather.yearlyAverages}
+                    years={years}
+                    lang={lang}
+                  />
+                </Suspense>
+
+                {/* Heatmap + Radar */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <Suspense fallback={<SkeletonChart />}>
                     <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <label className="text-xs text-gray-400">{t.heatmapYear}</label>
+                      <div className="flex items-center gap-2 mb-3">
+                        <label className="text-xs font-medium text-gray-400">{t.heatmapYear}</label>
                         <select
                           value={heatmapYear}
                           onChange={(e) => setHeatmapYear(parseInt(e.target.value))}
-                          className="px-2 py-1 rounded-lg bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-sm font-mono text-gray-700 dark:text-gray-300"
+                          className="px-2.5 py-1.5 rounded-lg bg-white/80 dark:bg-white/5 border border-gray-200/60 dark:border-white/8 text-sm font-mono text-gray-700 dark:text-gray-300"
                         >
                           {years.map((y) => (
                             <option key={y} value={y}>{y}</option>

@@ -60,7 +60,7 @@ export default function SearchBar({ onCitySelect, recentCities, lang }) {
           }}
           onFocus={() => setOpen(true)}
           placeholder={t.placeholder}
-          className="w-full pl-12 pr-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-body"
+          className="w-full pl-12 pr-4 py-3.5 rounded-2xl bg-white/80 dark:bg-white/[0.03] border border-gray-200/60 dark:border-white/8 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500/30 backdrop-blur-sm transition-all font-body shadow-sm"
           aria-label={t.placeholder}
         />
         {loading && (
@@ -73,7 +73,7 @@ export default function SearchBar({ onCitySelect, recentCities, lang }) {
       {open && (results.length > 0 || (query.length >= 2 && !loading)) && (
         <div
           ref={dropdownRef}
-          className="absolute z-50 w-full mt-2 rounded-2xl bg-white dark:bg-[#141829] border border-gray-200 dark:border-white/10 shadow-xl overflow-hidden"
+          className="absolute z-50 w-full mt-2 rounded-2xl bg-white/95 dark:bg-[#0d1225]/95 backdrop-blur-xl border border-gray-200/60 dark:border-white/8 shadow-2xl overflow-hidden"
         >
           {results.length > 0
             ? results.map((city) => (
