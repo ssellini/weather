@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: '/weather-time-machine/',
+  base: '/weather/',
   build: {
     outDir: 'dist',
     sourcemap: false,
