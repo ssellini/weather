@@ -27,7 +27,7 @@ export default function YearRangePicker({ startYear, endYear, onStartChange, onE
           <select
             value={startYear}
             onChange={(e) => onStartChange(parseInt(e.target.value))}
-            className="px-3 py-2 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+            className="px-3 py-2 rounded-xl bg-white/80 dark:bg-white/[0.03] border border-gray-200/60 dark:border-white/8 text-gray-900 dark:text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50"
             aria-label="Start year"
           >
             {Array.from({ length: currentYear - MIN_YEAR + 1 }, (_, i) => MIN_YEAR + i).map((y) => (
@@ -48,7 +48,7 @@ export default function YearRangePicker({ startYear, endYear, onStartChange, onE
           <select
             value={endYear}
             onChange={(e) => onEndChange(parseInt(e.target.value))}
-            className="px-3 py-2 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+            className="px-3 py-2 rounded-xl bg-white/80 dark:bg-white/[0.03] border border-gray-200/60 dark:border-white/8 text-gray-900 dark:text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50"
             aria-label="End year"
           >
             {Array.from({ length: currentYear - MIN_YEAR + 1 }, (_, i) => MIN_YEAR + i)
@@ -64,7 +64,7 @@ export default function YearRangePicker({ startYear, endYear, onStartChange, onE
             <button
               key={n}
               onClick={() => setQuick(n)}
-              className="px-3 py-1.5 rounded-xl text-xs font-medium bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-500/20 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border border-gray-200 dark:border-white/10"
+              className="px-3 py-1.5 rounded-xl text-xs font-medium bg-white/60 dark:bg-white/[0.03] text-gray-500 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 border border-gray-200/60 dark:border-white/8"
             >
               {n === 5 ? t.quick5 : n === 10 ? t.quick10 : t.quick20}
             </button>
