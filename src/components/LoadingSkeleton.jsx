@@ -17,7 +17,16 @@ export function SkeletonChart() {
   );
 }
 
-export default function LoadingSkeleton({ progress }) {
+export default function LoadingSkeleton({ progress, lang }) {
+  const isEn = lang === 'en';
+
+  const getLoadingMessage = () => {
+    if (progress < 0.3) return isEn ? 'Fetching data...' : 'Récupération des données...';
+    if (progress < 0.6) return isEn ? 'Analyzing historical records...' : 'Analyse des relevés historiques...';
+    if (progress < 0.9) return isEn ? 'Calculating statistics...' : 'Calcul des statistiques...';
+    return isEn ? 'Finalizing...' : 'Finalisation...';
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto px-4">
       {progress > 0 && progress < 1 && (
@@ -28,8 +37,8 @@ export default function LoadingSkeleton({ progress }) {
               style={{ width: `${progress * 100}%` }}
             />
           </div>
-          <p className="text-center text-sm text-gray-400 mt-2 font-mono">
-            {Math.round(progress * 100)}%
+          <p className="text-center text-sm text-gray-500 mt-3 font-medium animate-pulse">
+            {getLoadingMessage()} <span className="text-gray-400 ml-1 font-mono">({Math.round(progress * 100)}%)</span>
           </p>
         </div>
       )}

@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 import SearchBar from './SearchBar';
 import StatsCards from './StatsCards';
 import ChartTabs from './ChartTabs';

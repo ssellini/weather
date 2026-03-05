@@ -67,6 +67,15 @@ export default function App() {
     [setRecentCities]
   );
 
+  const removeRecentCity = useCallback(
+    (cityToRemove) => {
+      setRecentCities((prev) =>
+        prev.filter((c) => c.latitude !== cityToRemove.latitude || c.longitude !== cityToRemove.longitude)
+      );
+    },
+    [setRecentCities]
+  );
+
   const handleCitySelect = useCallback(
     (selectedCity) => {
       setCity(selectedCity);
@@ -136,7 +145,7 @@ export default function App() {
         ) : (
           <>
             {/* Search */}
-            <SearchBar onCitySelect={handleCitySelect} recentCities={recentCities} lang={lang} />
+            <SearchBar onCitySelect={handleCitySelect} recentCities={recentCities} onRemoveRecent={removeRecentCity} lang={lang} />
 
             {/* Year range */}
             <YearRangePicker
@@ -163,7 +172,7 @@ export default function App() {
             )}
 
             {/* Loading */}
-            {weather.loading && <LoadingSkeleton progress={weather.progress} />}
+            {weather.loading && <LoadingSkeleton progress={weather.progress} lang={lang} />}
 
             {/* Error */}
             {weather.error && (

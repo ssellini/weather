@@ -57,7 +57,8 @@ export default function StatsCards({ stats, unit, lang }) {
   const { avgTemp, records, rainiestYear, trend } = stats;
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+    <div className="flex overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 sm:grid sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 snap-x snap-mandatory hide-scrollbar">
+      <div className="snap-center shrink-0 w-4/5 sm:w-auto">
       <StatCard
         icon="🌡️"
         label={t.avgTemp}
@@ -66,6 +67,8 @@ export default function StatsCards({ stats, unit, lang }) {
         color="text-blue-500"
         accent="blue"
       />
+      </div>
+      <div className="snap-center shrink-0 w-4/5 sm:w-auto">
       <StatCard
         icon="🔥"
         label={t.heatRecord}
@@ -74,6 +77,8 @@ export default function StatsCards({ stats, unit, lang }) {
         color="text-red-500"
         accent="red"
       />
+      </div>
+      <div className="snap-center shrink-0 w-4/5 sm:w-auto">
       <StatCard
         icon="🥶"
         label={t.coldRecord}
@@ -82,6 +87,8 @@ export default function StatsCards({ stats, unit, lang }) {
         color="text-cyan-400"
         accent="cyan"
       />
+      </div>
+      <div className="snap-center shrink-0 w-4/5 sm:w-auto">
       <StatCard
         icon="🌧️"
         label={t.rainiestYear}
@@ -89,6 +96,8 @@ export default function StatsCards({ stats, unit, lang }) {
         sub={rainiestYear ? formatPrecipitation(rainiestYear.precipitation) : ''}
         accent="amber"
       />
+      </div>
+      <div className="snap-center shrink-0 w-4/5 sm:w-auto">
       <StatCard
         icon="📈"
         label={t.trend}
@@ -97,6 +106,8 @@ export default function StatsCards({ stats, unit, lang }) {
         color={trend && trend.totalChange > 0 ? 'text-orange-500' : 'text-blue-400'}
         accent="orange"
       />
+      </div>
+      <div className="snap-center shrink-0 w-4/5 sm:w-auto">
       <StatCard
         icon="💨"
         label={t.maxWind}
@@ -105,6 +116,7 @@ export default function StatsCards({ stats, unit, lang }) {
         color="text-gray-600 dark:text-gray-300"
         accent="gray"
       />
+      </div>
     </div>
   );
 }
