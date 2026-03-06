@@ -36,10 +36,12 @@ export default function ChartTabs({ monthlyAverages, years, lang }) {
           <span className="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center text-base">🌡️</span>
           {t.title}
         </h2>
-        <div className="flex rounded-xl overflow-hidden border border-gray-200/60 dark:border-white/8">
+        <div className="flex rounded-xl overflow-hidden border border-gray-200/60 dark:border-white/8" role="tablist">
           {tabs.map((item) => (
             <button
               key={item.key}
+              role="tab"
+              aria-selected={tab === item.key}
               onClick={() => setTab(item.key)}
               className={`px-3 py-1.5 text-xs font-medium transition-all ${
                 tab === item.key

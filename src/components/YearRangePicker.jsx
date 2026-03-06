@@ -3,8 +3,8 @@ import { useCallback } from 'react';
 const MIN_YEAR = 1940;
 
 const T = {
-  fr: { period: 'Période', quick5: '5 ans', quick10: '10 ans', quick20: '20 ans', to: 'à' },
-  en: { period: 'Period', quick5: '5 yrs', quick10: '10 yrs', quick20: '20 yrs', to: 'to' },
+  fr: { period: 'Période', quick5: '5 ans', quick10: '10 ans', quick20: '20 ans', to: 'à', years: 'ans' },
+  en: { period: 'Period', quick5: '5 yrs', quick10: '10 yrs', quick20: '20 yrs', to: 'to', years: 'years' },
 };
 
 export default function YearRangePicker({ startYear, endYear, onStartChange, onEndChange, lang }) {
@@ -59,16 +59,21 @@ export default function YearRangePicker({ startYear, endYear, onStartChange, onE
           </select>
         </div>
 
-        <div className="flex gap-2">
-          {[5, 10, 20].map((n) => (
-            <button
-              key={n}
-              onClick={() => setQuick(n)}
-              className="px-3 py-1.5 rounded-xl text-xs font-medium bg-white/60 dark:bg-white/[0.03] text-gray-500 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 border border-gray-200/60 dark:border-white/8"
-            >
-              {n === 5 ? t.quick5 : n === 10 ? t.quick10 : t.quick20}
-            </button>
-          ))}
+        <div className="flex flex-col sm:flex-row items-center gap-2">
+          <div className="text-xs font-medium px-3 py-1.5 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl mr-2 border border-blue-200 dark:border-blue-500/20">
+            {endYear - startYear} {t.years}
+          </div>
+          <div className="flex gap-2">
+            {[5, 10, 20].map((n) => (
+              <button
+                key={n}
+                onClick={() => setQuick(n)}
+                className="px-3 py-1.5 rounded-xl text-xs font-medium bg-white/60 dark:bg-white/[0.03] text-gray-500 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 border border-gray-200/60 dark:border-white/8"
+              >
+                {n === 5 ? t.quick5 : n === 10 ? t.quick10 : t.quick20}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
